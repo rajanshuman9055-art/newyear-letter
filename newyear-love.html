@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Year Love Letter for My ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Zeyada&family=Dancing+Script:wght@700&display=swap');
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #1e3c72, #2a5298, #00d4ff, #667eea);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Dancing Script', cursive;
+            overflow: hidden;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .paper {
+            background-image: url("https://i0.wp.com/textures.world/wp-content/uploads/2018/10/2-Millimeter-Paper-Background-copy.jpg?ssl=1");
+            background-size: 500px;
+            background-position: center;
+            padding: 30px 80px;
+            min-width: 300px;
+            transform: rotateZ(-3deg);
+            box-shadow: 1px 15px 30px rgba(0,0,0,0.4);
+            position: absolute;
+            border-radius: 10px;
+            cursor: grab;
+            transition: transform 0.2s;
+        }
+        .paper:active { cursor: grabbing; }
+        .paper.heart {
+            width: 220px;
+            height: 200px;
+            padding: 0;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+        }
+        .paper.heart::after {
+            content: "💕";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+        }
+        .paper.page1 { top: 20%; left: 10%; }
+        .paper.page2 { top: 40%; right: 20%; }
+        .paper.page3 { bottom: 30%; left: 30%; }
+        .paper.page4 { top: 50%; left: 50%; transform: translate(-50%, -50%) rotateZ(2deg); }
+        p {
+            font-size: 28px;
+            color: #d63384;
+            opacity: 0.9;
+            margin: 10px 0;
+            line-height: 1.4;
+            font-family: 'Zeyada', cursive;
+        }
+        .highlight { color: #ff4757; font-size: 32px; }
+        h2 { color: #e17055; font-size: 40px; text-align: center; margin-bottom: 20px; }
+        /* Fireworks particles */
+        .firework { position: absolute; width: 4px; height: 4px; background: #ffd700; border-radius: 50%; animation: explode 2s infinite; }
+    </style>
+</head>
+<body>
+    <div class="paper heart"></div>
+    <div class="paper page1">
+        <h2>Happy New Year, My Love! 🎉❤️</h2>
+        <p>As 2025 ends, my heart overflows with gratitude for you.</p>
+        <p class="highlight">You make every day magical. Here's to 2026 together!</p>[web:7][page:2]
+    </div>
+    <div class="paper page2">
+        <h2>Page 2: Our Beautiful Moments 💫</h2>
+        <p>From stolen kisses to late-night talks, you've been my joy.</p>
+        <p class="highlight">Drag me to reveal more... I love you more each day! 😍</p>
+        <p>New Year wish: Endless adventures with you.</p>[web:7][page:2]
+    </div>
+    <div class="paper page3">
+        <h2>Page 3: Promises for 2026 🌟</h2>
+        <p>I'll hold you closer, dream bigger, love deeper.</p>
+        <p class="highlight">You're my everything—Happy New Year, sweetheart!</p>[web:7][page:2]
+    </div>
+    <div class="paper page4">
+        <h2>Final Page: Forever Yours 💖</h2>
+        <p>Drag all papers to see this: I choose you every year.</p>
+        <p class="highlight">Happy 2026! Let's make it unforgettable. Love, [your bacchuuu]</p>
+        <p>💕 Scan again anytime 💕</p>
+    </div>
+
+    <script>
+        let highestZ = 1;
+        class Paper {
+            constructor() {
+                this.holdingPaper = false;
+                this.mouseX = 0; this.mouseY = 0;
+                this.prevMouseX = 0; this.prevMouseY = 0;
+                this.velX = 0; this.velY = 0;
+                this.currentPaperX = 0; this.currentPaperY = 0;
+                this.rotation = Math.random() * 20 - 10;
+                this.rotating = false;
+            }
+            init(paper) {
+                document.addEventListener('mousemove', (e) => {
+                    this.mouseX = e.clientX; this.mouseY = e.clientY;
+                    this.velX = this.mouseX - this.prevMouseX;
+                    this.velY = this.mouseY - this.prevMouseY;
+                    if (this.holdingPaper && !this.rotating) {
+                        this.currentPaperX += this.velX * 0.5;
+                        this.currentPaperY += this.velY * 0.5;
+                    }
+                    this.prevMouseX = this.mouseX; this.prevMouseY = this.mouseY;
+                    paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
+                });
+                paper.addEventListener('mousedown', (e) => {
+                    if (e.button === 0) {
+                        this.holdingPaper = true;
+                        paper.style.zIndex = highestZ++;
+                    }
+                });
+                window.addEventListener('mouseup', () => {
+                    this.holdingPaper = false;
+                });
+            }
+        }
+        document.querySelectorAll('.paper').forEach(paper => {
+            const p = new Paper();
+            p.init(paper);
+        });
+        // Simple fireworks
+        setInterval(() => {
+            const fw = document.createElement('div');
+            fw.className = 'firework';
+            fw.style.left = Math.random() * 100 + '%';
+            fw.style.top = Math.random() * 100 + '%';
+            document.body.appendChild(fw);
+            setTimeout(() => fw.remove(), 2000);
+        }, 3000);
+    </script>
+</body>
+</html>
